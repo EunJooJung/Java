@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.my.mapper"> <!-- mapper으 이름 설정 dao에서 호출할 때 com.my.mapper.00000(selectList)이런식으로 호출된다. -->
+
+
+  <select id="selectList" resultMap="myMap">
+  	SELECT MYNO, MYNAME, MYTITLE, MYCONTENT, MYDATE
+  	FROM MYBOARD
+  </select>
+  
+  	<select id="selectOne" parameterType="int" resultType="myDto">	<!-- parameterType dao에서 받아온 객체의 타입을 알려준다 -->
+  		SELECT * FROM MYBOARD WHERE MYNO = #{myno}	<!-- resultType은 리턴되는 결과값의 타입을 명시하고 select에서는 반듯이 사용해야한다 -->
+  	</select>
+  	
+  	<select id="insert" parameterType="myDto">
+  		INSERT INTO MYBOARD VALUES(MYSEQ.NEXTVAL, #{myname}, #{mytitle},#{mycontent},SYSDATE)
+  	</select>
+  
+  	
+  	<resultMap type="myDto" id="myMap">			<!-- 원래 만들어진 colum들을 내가 원하는 이름으로 붙여 쓰겠다.column속성에 내가 원하는 이름 적음 -->
+  		<result property="myno" column="MYNO"/>
+  		<result property="myname" column="MYNAME"/>
+  		<result property="mytitle" column="MYTITLE"/>
+  		<result property="mycontent" column="MYCONTENT"/>
+  		<result property="mydate" column="MYDATE"/>
+  	</resultMap>
+  	
+  	<update id="update" parameterType="myDto">
+  		UPDATE MYBOARD
+  		SET MYTITLE=#{mytitle}, MYCONTENT= #{mycontent}
+  		WHERE MYNO = #{myno}
+  	</update>
+  	
+  	<delete id="delete" parameterType="int">
+  		DELETE FROM MYBOARD
+  		WHERE MYNO = #{myno}
+  	</delete>
+  
+  	
+</mapper>

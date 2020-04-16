@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script type="text/javascript" src="https://code.jquery.com/jsquery-3.4.1.js"></script>
+<script type="text/javascript">
+	function getParameterValue(){
+		var name = "name="+encodeURIcComponent($("#name").val());
+		var kor = "kor="+$("#kor").val();
+		var eng = "eng="+$("#eng").val();
+		var math = "math="+$("#math").val();
+		
+		var query = name+"&"+kor+"&"+eng+"&"+math;
+		
+		return query;
+		
+	}
+	
+	$(function(){
+		$("#process").click(function(){
+		$.ajax({
+			url:"score.cal?"+getParameterValues(),
+			dataType:"json",
+			//return 받아서 가져오는 data의 type
+			successfunction(msg){
+				$("#result").html(decodeURIComponent(msg.name)+"님의 총점은"+msg.sum+"이고, 평균은"+msg.avg+"입니다.");
+			},
+			eroor:function(){
+				alert("통신 실패");
+			}
+			});
+		});
+	});
+
+</script>
+
+</head>
+<body>
+
+   <h1>성적 처리 프로그램</h1>
+   
+   이름 : <input type="text" id="name" /><br/>
+   국어 : <input type="text" id="kor" /><br/>
+   영어 : <input type="text" id="eng" /><br/>
+   수학 : <input type="text" id="math" /><br/>
+   <input type="button" id="process" value="성적 처리"/><br/>
+
+   <div id="result"></div>
+
+
+
+</body>
+</html>

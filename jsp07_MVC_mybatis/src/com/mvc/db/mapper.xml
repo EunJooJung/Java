@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mvc.mapper">
+	
+	<select id="selectList" resultType="MVCDto">
+		SELECT * FROM MVCBOARD 
+	</select>
+	
+	<select id="selectOne" resultType="MVCDto">
+		SELECT * FROM MVCBOARD WHERE SEQ = #{seq}
+	</select>
+	
+	<insert id="insert" parameterType="MVCDto">
+		INSERT INTO MVCBOARD VALUES(MVCSEQ.NEXTVAL,#{writer},#{title},#{content},SYSDATE)
+	</insert>
+	
+	<update id="update" parameterType="MVCDto">
+		UPDATE MVCBOARD SET TITLE =#{title}, CONTENT=#{content} WHERE SEQ = #{seq}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM MVCBOARD WHERE SEQ = #{seq}
+	</delete>
+
+
+</mapper>
